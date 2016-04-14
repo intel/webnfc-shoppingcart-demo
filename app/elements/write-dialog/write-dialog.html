@@ -245,6 +245,13 @@ Copyright (c) 2015, 2016 Intel Corporation. All rights reserved.
 
         ready: function() {
           window.addEventListener('resize', this.windowChange.bind(this));
+          this.addEventListener('iron-overlay-opened', _ => {
+            document.body.style.overflow = 'hidden';
+          });
+          this.addEventListener('iron-overlay-closed', _ => {
+            document.body.style.overflow = '';
+          });
+
           this.$.input.addEventListener('input', this.inputChange.bind(this));
 
           // For Quagga.
