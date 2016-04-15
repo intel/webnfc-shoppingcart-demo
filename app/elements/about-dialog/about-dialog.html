@@ -16,7 +16,10 @@ Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 <dom-module id="about-dialog">
   <template>
     <style>
+
       :host {
+        position: static;
+
         --paper-dialog-background-color: white;
 
         -webkit-overflow-scrolling: touch;
@@ -46,7 +49,6 @@ Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
 
       @media (min-width: 601px) {
         :host {
-          position: fixed;
           width: 90%;
           max-width: 480px;
           height: 90%;
