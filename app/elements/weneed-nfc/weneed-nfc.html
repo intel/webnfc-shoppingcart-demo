@@ -26,7 +26,7 @@ Copyright (c) 2015, 2016 Intel Corporation. All rights reserved.
         },
 
         ready: function() {
-          this.faking = !navigator.nfc || !navigator.nfc.requestAdapter;
+          this.faking = !navigator.nfc;
         },
 
         attached: function() {
@@ -34,25 +34,13 @@ Copyright (c) 2015, 2016 Intel Corporation. All rights reserved.
             return;
           }
 
-          (() => {
-            if (this.adapter) {
-              return Promise.resolve(this.adapter);
-            } else {
-              return navigator.nfc.requestAdapter();
+          navigator.nfc.watch(message => {
+            for (let record of message.data) {
+              console.log(record.data);
+              let name = record.data.name;
+              this.onItemReceived(name);
             }
-          })().then((adapter) => {
-            this.adapter = adapter;
-            this.adapter.watch({}, (message) => {
-              if (message[0].kind !== 'json') {
-                this.fire('warn', { value: 'Malformed NFC tag' });
-                return;
-              }
-              console.log(message);
-              var tmpData = JSON.parse(message[0].data);
-              var name = tmpData.name;
-              this.onItemReceived(name); 
-            });
-          });
+          }, { mode: "any", recordType: "json" });
         },
 
         onItemReceived: function(name) {

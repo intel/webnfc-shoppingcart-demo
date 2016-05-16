@@ -379,33 +379,29 @@ Copyright (c) 2015, 2016 Intel Corporation. All rights reserved.
         write: function() {
           this.state = 1;
 
-          if (!navigator.nfc || !navigator.nfc.requestAdapter) {
+          if (!navigator.nfc) {
             //this.fire('warn', { value: 'Failed to write; no WebNFC support'});
             //this.toggle();
             return;
           }
 
-          (() => {
-            if (this.adapter) {
-              return Promise.resolve(this.adapter);
-            } else {
-              return navigator.nfc.requestAdapter();
-            }
-          })().then((adapter) => {
-            this.adapter = adapter;
-            this.adapter.pushMessage([{
-              kind: 'json',
-              type: 'application/json',
-              data: JSON.stringify({ name: this.value })
-            }], { target: 'tag', timeout: 5 })
-            .then(() => {
-              this.fire('info', { value: 'Wrote ' + this.value });
-              this.onWriteSucceeded();
-            })
-            .catch(() => {
-              this.fire('warn', { value: 'Failed to write; unknown error' });
-              this.onWriteFailed();
-            });
+          navigator.nfc.push({
+            data: [
+              {
+                recordType: "json",
+                mediaType: "application/json",
+                data: { name: this.value }
+              }
+            ]
+          }, {
+            target: 'tag',
+            ignoreRead: true
+          }).then(_ => {
+            this.fire('info', { value: 'Wrote ' + this.value });
+            this.onWriteSucceeded();
+          }).catch(_ => {
+            this.fire('warn', { value: 'Failed to write; unknown error' });
+            this.onWriteFailed();
           });
         }
       });
