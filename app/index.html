@@ -156,13 +156,13 @@ Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
   </div>
 
   <template is="dom-bind" id="app">
-    <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
-    <carbon-route
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route
       route="{{route}}"
       pattern="!/:page"
       data="{{routeData}}"
       tail="{{routeTail}}">
-    </carbon-route>
+    </app-route>
 
     <main-app route="{{routeData}}"></main-app>
 

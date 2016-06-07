@@ -12,7 +12,7 @@
     "webcomponentsjs": "WebComponents/webcomponentsjs#~0.7.20",
     "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#~1.1.0",
     "quagga": "~0.8.2",
-    "carbon-route": "polymerelements/carbon-route#~0.8.4",
+    "app-route": "polymerelements/app-route#~0.9.1",
     "app-layout": "PolymerLabs/app-layout#~0.0.15"
   },
   "devDependencies": {
