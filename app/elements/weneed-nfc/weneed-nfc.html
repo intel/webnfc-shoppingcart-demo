@@ -35,7 +35,7 @@ Copyright (c) 2015, 2016 Intel Corporation. All rights reserved.
           }
 
           navigator.nfc.watch(message => {
-            for (let record of message.data) {
+            for (let record of message.records) {
               console.log(record.data);
               let name = record.data.name;
               this.onItemReceived(name);
